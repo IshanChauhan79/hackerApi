@@ -4,11 +4,11 @@
   padding: 0.5rem;
   display: flex;
   align-items: center;
-  margin-left: 2.6rem;
   /* min-height: 3rem; */
 }
 .Logo {
   height: 2rem;
+  min-width: 2rem;
   display: inline-block;
   border: 1px solid white;
   overflow: hidden;
@@ -34,6 +34,6 @@
   margin-left: 0.8rem;
   padding-left: 0.8rem;
 }
-.Nav>div:first-child {
+.Nav > div:first-child {
   border-left: 0 !important ;
 }
