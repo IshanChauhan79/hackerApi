@@ -1,22 +1,26 @@
 import React from "react";
 import classes from "./Header.module.css";
 import logo from "../../assets/images/y18.gif";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <div className={classes.Header}>
       <div className={classes.Logo}>
-        <img src={logo} alt="" />
+        <Link to="/">
+          <img src={logo} alt="" />
+        </Link>
       </div>
       <div className={classes.HeaderComp}>
-        <div className={classes.Title}>Hacker News</div>
+        <Link to="/" className={classes.Title}>
+          Hacker News
+        </Link>
         <div className={classes.Nav}>
-          <div>Best</div>
-          <div>Top</div>
-          <div>Latest</div>
-          <div>Ask</div>
-          <div>Shows</div>
-          <div>Jobs</div>
+          <Link to="/best">Best </Link>
+          <Link to="/top">Top </Link>
+          <Link to="/ask">Ask </Link>
+          <Link to="/shows">Shows </Link>
+          <Link to="/jobs">Jobs </Link>
         </div>
       </div>
     </div>

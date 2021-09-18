@@ -10,6 +10,8 @@
 .Number {
   color: #9a9a9a;
   margin-right: 1rem;
+  text-align: right;
+  min-width: 2rem;
 }
 .StoryData {
   display: flex;
