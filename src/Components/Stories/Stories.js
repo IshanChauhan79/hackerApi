@@ -1,32 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./Stories.module.css";
+import { useLocation, useHistory } from "react-router";
+import { getStories, getStoryIds } from "../../hackerApi/hackerApi";
 
-const data = {
-  by: "Funes-",
-  descendants: 650,
-  id: 28550764,
-  kids: [28552193, 28551057, 28554552, 28551558, 28563998],
-  score: 3251,
-  time: 1631794574,
-  title:
-    "A search engine that favors text-heavy sites and punishes modern web design",
-  type: "story",
-  url: "https://search.marginalia.nu/",
-};
 function Stories() {
+  // const history = useHistory();
+  const location = useLocation();
+
+  const [storyids, setStoryids] = useState([]);
+  const [story, setStories] = useState([]);
+  // console.log(location, history);
+  useEffect(() => {
+    getStoryIds(location.pathname).then((data) => setStoryids(data.data));
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const data = getStories(storyids.slice(0, 30)).then((storiesList) =>
+      setStories(storiesList)
+    );
+  }, [storyids]);
+
   return (
     <div className={classes.Stories}>
-      <div className={classes.Story}>
-        <div className={classes.Number}>1.</div>
-        <div className={classes.StoryData}>
-          <div className={classes.Title}>{data.title}</div>
-          <div className={classes.Desc}>
-            {`${data.score} score by ${data.by}, ${data.kids.length} comments, ${Math.floor(data.time/1000/60/60/24/7)} weeks ago`}
+      {story.map((el, i) => (
+        <div className={classes.Story} key={el.id}>
+          <div className={classes.Number}>{i + 1}.</div>
+          <div className={classes.StoryData}>
+            <div className={classes.Title}>{el.title}</div>
+            <div className={classes.Desc}>
+              {`${el.score} score by ${el.by}, ${
+                el.kids.length
+              } comments, ${Math.floor(
+                el.time / 1000 / 60 / 60 / 24 / 7
+              )} weeks ago`}
+            </div>
           </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 }
 
 export default Stories;
+
+/* {storyids.slice(0, 30).map((id) => (
+        <Story id={id} key={id} />
+    ))} */
