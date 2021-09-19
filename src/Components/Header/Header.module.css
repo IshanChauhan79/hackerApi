@@ -39,3 +39,18 @@
 .Nav > a:first-child {
   border-left: 0 !important ;
 }
+
+@media screen and (max-width: 40em) {
+  .HeaderComp {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .Nav > a:first-child {
+    margin-left: 0rem;
+    padding-left: 0rem;
+  }
+  .Logo {
+    height: 2.4rem;
+    min-width: 2.4rem;
+  }
+}

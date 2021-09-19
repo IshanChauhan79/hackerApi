@@ -3,24 +3,15 @@
   flex-direction: column;
   background-color: #f6f6ef;
 }
-.Story {
-  margin: 0.5rem 1rem;
+.StoryPageNavigation{
   display: flex;
+  margin:1rem;
 }
-.Number {
-  color: #9a9a9a;
-  margin-right: 1rem;
-  text-align: right;
-  min-width: 2rem;
+.StoryPageNavigation>div{
+  margin:0 1rem;
 }
-.StoryData {
-  display: flex;
-  flex-direction: column;
-}
-.Title {
-  font-size: 1.6rem;
-}
-.Desc {
-  font-size: 1.3rem;
-  color: #9a9a9a;
+.StoryPageNavigation>div:hover{
+  color:#9a9a9a;
+  text-decoration: underline;
+  cursor: pointer;
 }

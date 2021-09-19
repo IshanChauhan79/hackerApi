@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
 import classes from "./Stories.module.css";
-import { useLocation, useHistory } from "react-router";
+import { useLocation } from "react-router";
 import { getStories, getStoryIds } from "../../hackerApi/hackerApi";
+import Story from "./Story/Story";
 
 function Stories() {
-  // const history = useHistory();
   const location = useLocation();
-
   const [storyids, setStoryids] = useState([]);
   const [story, setStories] = useState([]);
   const [loading, setloading] = useState(true);
+  const [currentStoryIndex, setCurrenStoryIndex] = useState(30);
 
-  // console.log(location, history);
+  const [maxStories, setMaxStories] = useState(0);
+
   useEffect(() => {
-    getStoryIds(location.pathname).then((data) => setStoryids(data.data));
+    getStoryIds(location.pathname).then((data) => {
+      setStoryids(data.data);
+      setMaxStories(data.data.length);
+    });
+    setStories([]);
     setloading(true);
+    setCurrenStoryIndex(30);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -24,25 +30,60 @@ function Stories() {
     });
   }, [storyids]);
 
-  let storyList = "";
-  if (loading) {
-    storyList = "";
-  } else {
-    storyList = story.map((el, i) => (
-      <div className={classes.Story} key={el.id}>
-        <div className={classes.Number}>{i + 1}.</div>
-        <div className={classes.StoryData}>
-          <div className={classes.Title}>{el.title}</div>
-          <div className={classes.Desc}>
-            {`${el.score} score by ${el.by}, ${
-              el.kids ? el.kids.length + " comments, " : ""
-            }${Math.floor(el.time / 1000 / 60 / 60 / 24 / 7)} weeks ago`}
-          </div>
-        </div>
-      </div>
-    ));
+  const nextPageHandler = () => {
+    setloading(true);
+
+    getStories(storyids.slice(currentStoryIndex, currentStoryIndex + 30)).then(
+      (storiesList) => {
+        setStories(storiesList);
+        setloading(false);
+        setCurrenStoryIndex((prev) => prev + 30);
+      }
+    );
+  };
+
+  const backPageHandler = () => {
+    setloading(true);
+
+    getStories(storyids.slice(currentStoryIndex, currentStoryIndex + 30)).then(
+      (storiesList) => {
+        setStories(storiesList);
+        setloading(false);
+        setCurrenStoryIndex((prev) => prev - 30);
+      }
+    );
+  };
+
+  let storyList = null;
+  let hasNextPage = null;
+  let hasPrevPage = null;
+
+  if (!loading) {
+    var index = 0;
+    storyList = story.map((el, i) => {
+      if (el !== null) {
+        index = index + 1;
+        return (
+          <Story data={el} number={index + currentStoryIndex - 30} key={i} />
+        );
+      }
+    });
   }
-  return <div className={classes.Stories}>{storyList}</div>;
+  if (!loading && currentStoryIndex < maxStories) {
+    hasNextPage = <div onClick={nextPageHandler}>more</div>;
+  }
+  if (!loading && currentStoryIndex > 30) {
+    hasPrevPage = <div onClick={backPageHandler}>back</div>;
+  }
+  return (
+    <div className={classes.Stories}>
+      {storyList}
+      <div className={classes.StoryPageNavigation}>
+        {hasNextPage}
+        {hasPrevPage}
+      </div>
+    </div>
+  );
 }
 
 export default Stories;
