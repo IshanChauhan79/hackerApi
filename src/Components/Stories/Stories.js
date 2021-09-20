@@ -66,6 +66,8 @@ function Stories() {
         return (
           <Story data={el} number={index + currentStoryIndex - 30} key={i} />
         );
+      }else{
+        return null
       }
     });
   }
@@ -79,8 +81,8 @@ function Stories() {
     <div className={classes.Stories}>
       {storyList}
       <div className={classes.StoryPageNavigation}>
-        {hasNextPage}
         {hasPrevPage}
+        {hasNextPage}
       </div>
     </div>
   );

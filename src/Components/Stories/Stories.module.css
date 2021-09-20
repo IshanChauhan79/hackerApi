@@ -3,15 +3,14 @@
   flex-direction: column;
   background-color: #f6f6ef;
 }
-.StoryPageNavigation{
+.StoryPageNavigation {
   display: flex;
-  margin:1rem;
 }
-.StoryPageNavigation>div{
-  margin:0 1rem;
+.StoryPageNavigation > div {
+  margin: 1rem 2rem;
 }
-.StoryPageNavigation>div:hover{
-  color:#9a9a9a;
+.StoryPageNavigation > div:hover {
+  color: #9a9a9a;
   text-decoration: underline;
   cursor: pointer;
 }

@@ -15,6 +15,10 @@
 .Title {
   font-size: 1.6rem;
 }
+.Title > a {
+  color: black;
+  text-decoration: none;
+}
 .Desc {
   font-size: 1.3rem;
   color: #9a9a9a;
